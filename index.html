@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Game of Housie</title>
+    <link rel="shortcut icon" href="favicon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .snum {
+            margin: 2px ;
+            width: 2.5em;
+            height: 2.5em;
+        }
+        .mnum {
+            display: inline-block;
+            min-width: 7rem !important;
+            min-height: 7rem !important;
+            font-size: 4rem;
+            margin: 5px 0;
+            padding: 5px 0;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .loading{
+         width: 100vw;
+         height: 100vh;
+         position: fixed;
+         top:0;
+         left:0;
+         z-index:10000;
+       }
+       @media (min-width: 992px) { 
+            .snum {
+                font-size:2em;
+                width: 2em;
+                height: 2em;
+            }
+            .game {
+                padding: 50px 0;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="text-center p-2">Housie Game App</h2>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="text-center">
+                    <div class="border border-dark-subtle bg-dark-subtle p-2">
+                        <div class="pb-2"><b>Played Number(s) Board</b></div>
+                        <div id="board">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="game text-center">
+                    <button class="btn btn-secondary mx-2 fs-2" style="width: 4rem;" id="get-number">
+                        <span id="play" class="">
+                            <i class="bi bi-play-circle"></i>
+                        </span>
+                    </button>
+                    <span class="border border-secondary bg-secondary-subtle mnum" id="result"><span class="text-light">00</span></span>
+                    <button class="btn btn-warning mx-2 fs-2" style="width: 4rem;" id="new-game">
+                        <span id="start" class="">
+                            <i class="bi bi-arrow-repeat"></i>
+                        </span>
+                    </button>
+                    <div>Last Number: <span class="badge text-bg-warning" id="last"></span></div>
+                </div>                
+            </div>
+            <div class="text-secondary mt-2 text-center">
+                2010 - <script>document.write(new Date().getFullYear())</script> &copy; <a target="_blank" class="text-secondary text-decoration-none" href="https://fdh.pw">fdh.pw</a> | <a type="button" class="text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#about-game">How to Play?</a>
+            </div>
+        </div>
+    </div>
+    <div id="loading" class="d-none loading bg-light bg-opacity-75 pt-5">
+        <div class="d-flex justify-content-center pt-5">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    <!-- About Game -->
+  <div class="modal fade" id="about-game" tabindex="-1" aria-labelledby="about-game-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="about-game-label">About This App</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>This app will replace the physical board and balls, so you can just have physical tickets. To start a new game tap the <span class="badge text-bg-secondary"><i class="bi-play-circle"></i></span> icon. 
+            A random number between 1-90 is generated (<span class="text-info">using <b>Math.random()</b> inbuild function of javascript</span>) and saved on the board.</p>
+          <p>This app is purely made using <b>html</b> and <b>JavaScript</b> with <a target="_blank" href="https://getbootstrap.com">Bootstrap</a> for styling.  
+            We use <a target="_blank" target="_blank" href="https://www.jsdelivr.com/package/npm/js-cookie">js-cookie</a>  library to save the game progress.</p>
+          <p>To re-start a game you can tap the <span class="badge text-bg-warning"><i class="bi bi-arrow-repeat"></i></span> icon. <span class="text-danger">This will delete previous game progress!</span></p>
+
+          <p>Enjoy!!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        const min = 0;
+        const max = 90;
+        const expTime = 1/24;
+        const jsCkOpts = { path: '/', expires:expTime, sameSite:'strict'};
+        var count = 0;
+        var p = max;
+        var prev = document.getElementById("last");
+        var result = document.getElementById("result");
+        var board = document.getElementById("board");
+        
+
+        var house = [];
+
+        function makeBoard(){
+            let boarddata = '';
+            for(let i=min;i<max;i++){
+                let bno = i+1;
+                boarddata += '<span class="badge text-bg-light p-2 snum" id="'+i+'">' + bno + '</span>';
+            }
+            board.innerHTML = boarddata;
+        }
+
+        //initiliase the house
+        function initial(){
+            house[max] = "NA";            
+            //Cookies already exist
+            if(Cookies.get("gamestart") == "started"){
+                //populate house[] from cookies values
+                house = JSON.parse(Cookies.get('house'));
+                let pi = JSON.parse(Cookies.get('pi'));
+                makeBoard();
+
+                //mark board with already played numbers
+                for(let i=min;i<max;i++){
+                    if(house[i] != "no"){
+                        count++;
+                        let el = document.getElementById(i);
+                        el.classList.remove("text-bg-light");
+                        el.classList.add("text-bg-warning");
+                    }
+                }
+                //set p value
+                p = pi['p'];
+                markBoard(pi['i']);
+            }else{
+                Cookies.set("gamestart","started",jsCkOpts);        
+                makeBoard();
+                for(let i=min;i<max;i++){
+                    house[i] = "no";
+                }
+                Cookies.set('pi',JSON.stringify({'p':max,'i':max}),jsCkOpts);
+                Cookies.set('house',JSON.stringify(house),jsCkOpts);
+            }
+        }
+
+        function markBoard(i){
+            if(i!=max){
+                document.getElementById(i).classList.remove("text-bg-light");
+                document.getElementById(i).classList.add("text-bg-warning");
+                result.innerHTML = i+1;
+            }
+            prev.innerHTML = house[p];
+            p = i;
+        }
+        
+        function startLoading(){
+            document.getElementById('loading').classList.remove("d-none");
+        }
+        function stopLoading(){
+            document.getElementById('loading').classList.add("d-none");
+        }
+
+        //Get new random number between 1-99
+        function housie(){
+            startLoading();
+            var i = randomNumber(min,max);
+            if (house[i] == "no"){
+                setTimeout(function (){
+                    count++;
+                    house[i] = i+1
+                    house[max] = house[i]
+                    Cookies.set('pi',JSON.stringify({'p':p,'i':i}),jsCkOpts);
+                    markBoard(i);
+                    Cookies.set('house',JSON.stringify(house),jsCkOpts);
+                    stopLoading();
+                    return i+1;                            
+                }, randomNumber(1000,2500)); 
+                
+            }else{
+                if(count<max){
+                    housie();
+                }else{
+                    prev.innerHTML = "All Numbers Played";
+                    stopLoading();
+                }
+            }
+        }
+
+        //Reload Game from start
+        function reload(){
+            let text = "Do you want to Start a new Game?";
+            if(confirm(text) == true){
+                startLoading();
+                count = 0;
+                Cookies.remove('gamestart',jsCkOpts);
+                Cookies.remove('pi',jsCkOpts);
+                Cookies.remove('house',jsCkOpts);            
+                setTimeout(function (){
+                    initial();
+                    var els = document.querySelectorAll(".snum.text-bg-warning");
+                    els.forEach(r => {
+                        r.classList.remove("text-bg-warning");
+                        r.classList.add("text-bg-light");
+                    });
+                    result.innerHTML='<span class="text-light">00</span>';
+                    prev.innerHTML = "";
+                    stopLoading();
+                }, 1000);
+            }
+        }
+
+        //Generate Random Number
+        function randomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        document.getElementById("get-number").addEventListener("click",housie);
+        document.getElementById("new-game").addEventListener("click",reload)
+        document.addEventListener("DOMContentLoaded",initial);
+			
+    </script>
+</body>
+</html>
