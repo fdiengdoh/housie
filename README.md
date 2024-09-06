@@ -6,4 +6,6 @@ A random number between 1-90 is generated (using Math.random() inbuild function 
 
 This app is purely made using html and JavaScript with Bootstrap for styling. We use js-cookie library to save the game progress.
 
+# Screen Shot of the webapp
+
 demo https://cn.fdh.pw
