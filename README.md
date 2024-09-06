@@ -12,11 +12,7 @@ Demo of the app at https://cn.fdh.pw
 
 **On mobile device**
 
-<img src="images/blank_mob.png" width="45%">
-
-![Before game start](images/blank_mob.png "Before the game start") 
-
-![Game Progress](images/played_mb.png "Game Progress")
+<img src="images/blank_mob.png" width="390px"> <img src="images/played_mb.png" width="390px"> 
 
 **On Desktop Browser**
 
