@@ -4,7 +4,7 @@ This webapp will replace the physical board and balls, so you can just have phys
 
 A random number between 1-90 is generated (using Math.random() inbuild function of javascript) and saved on the board.
 
-This app is purely made using html and JavaScript with [Bootstrap](https://getbootstrap.com) for styling. We use [js-cookie](https://github.com/js-cookie/js-cookie) library to save the game progress.
+This app is purely made using html and JavaScript with [Bootstrap](https://getbootstrap.com) for styling and [js-cookie](https://github.com/js-cookie/js-cookie) library to save the game's progress.
 
 Demo of the app at [cn.fdh.pw](https://cn.fdh.pw)
 
