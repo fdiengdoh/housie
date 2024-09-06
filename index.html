@@ -185,11 +185,12 @@
             document.getElementById('loading').classList.add("d-none");
         }
 
-        //Get new random number between 1-99
+        //Get new random number between 1-90
         function housie(){
             startLoading();
             var i = randomNumber(min,max);
             if (house[i] == "no"){
+                //Adding a random fake delay
                 setTimeout(function (){
                     count++;
                     house[i] = i+1
