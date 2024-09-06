@@ -8,4 +8,11 @@ This app is purely made using html and JavaScript with Bootstrap for styling. We
 
 # Screen Shot of the webapp
 
+**On mobile device**
+
+![Before game start](images/blank_mob.png "Before the game start")
+
+![Game Progressed](images/played_mb.png "Before the game start")
+
+
 demo https://cn.fdh.pw
