@@ -5,113 +5,275 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game of Housie</title>
     <link rel="shortcut icon" href="favicon.png" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
-        .snum {
-            margin: 2px ;
-            width: 2.5em;
-            height: 2.5em;
-        }
-        .mnum {
-            display: inline-block;
-            min-width: 7rem !important;
-            min-height: 7rem !important;
-            font-size: 4rem;
-            margin: 5px 0;
-            padding: 5px 0;
-            text-align: center;
-            vertical-align: middle;
-        }
-        .loading{
-         width: 100vw;
-         height: 100vh;
-         position: fixed;
-         top:0;
-         left:0;
-         z-index:10000;
-       }
-       @media (min-width: 992px) { 
-            .snum {
-                font-size:2em;
-                width: 2em;
-                height: 2em;
-            }
-            .game {
-                padding: 50px 0;
-            }
-        }
+    :root{
+        --gap:clamp(0.2rem, 0.04rem + 0.8vw, 1rem);
+    }
+    *{
+        margin:0;
+        padding:0;
+    }
 
+    body{
+        font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;;
+        line-height: 1.5;
+        max-width:1400px;
+        margin:0 auto;
+        padding:0 1rem;
+        display:grid;
+        gap:var(--gap);
+        grid-template-columns:3fr 1fr;
+        grid-template-rows:1fr auto 1fr;
+        grid-template-areas:
+            "header header"
+            "main aside"
+            "footer footer";
+        @media(max-width: 800px){
+            grid-template-columns:1fr;
+            grid-template-rows:auto;
+            grid-template-areas:
+            "header"
+            "main"
+            "aside"
+            "footer";
+        }
+    }
+
+    header{
+        grid-area:header;
+        text-align: center;
+    }
+    main{
+        background:#ced4da;
+        grid-area:main;
+        text-align: center;
+        padding: var(--gap);
+    }
+    aside{
+        background:#dfe5eb;
+        grid-area:aside;
+        display: flex;
+        flex-direction: column;
+        gap:var(--gap);
+        justify-content: center;
+        align-items: center;
+        padding:1rem;
+        .game-play{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap:1rem;
+            @media(max-width:800px){
+                flex-direction: row;
+            }
+        }
+    }
+    footer{
+        grid-area:footer;
+        text-align:center;
+    }
+    h1{
+        font-size: clamp(1.5rem, 1.1rem + 2vw, 3.5rem);;
+    }
+    h2 {
+        font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
+    }
+
+    a, a:link, a:visited{
+        text-decoration: none;
+        color:#00224b;
+    }
+
+    #board{
+        display:flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--gap);
+        padding:var(--gap);
+        
+    }
+    .snum{
+        width: clamp(1.3rem, 0.96rem + 1.7vw, 3rem);
+        height: clamp(1.3rem, 0.96rem + 1.7vw, 3rem);
+        font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
+        font-weight: bold;
+        background:#fff;
+        border-radius: clamp(5px, 4px + 0.3125vw, 10px);
+        padding: clamp(5px, 4px + 0.3125vw, 10px);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .mnum{
+        background: #e2e3e5;
+        border:1px solid rgb(108,117,128);
+        min-width: clamp(6rem, 5.2rem + 4vw, 10rem);
+        min-height: clamp(6rem, 5.2rem + 4vw, 10rem);
+        font-size: 4rem;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .badge{
+        padding:2px 10px;
+        background:#6c757d;
+        color:#fff;
+        border-radius: 10px;
+        font-weight: 600;
+    }
+
+    .play-btn, .reset-play{
+        background:#6c757d;
+        border:none;
+        border-radius:clamp(5px, 4px + 0.3125vw, 10px);
+        width:clamp(4rem, 3.4rem + 3vw, 7rem);
+        height: 3rem;
+        color:#fff;
+        font-size:2rem;
+    }
+    .reset-play, .active-num{
+        background:#ffcd39;
+        color:#000;
+    }
+    .text-danger{
+        color:#dc3545;
+    }
+    .loader {
+        width: 50px;
+        margin:0 auto;
+        aspect-ratio: 1;
+        border: 6px solid #e3e3e3;
+        border-top: 6px solid #00224b;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .loading{
+        width: 100dvw;
+        height: 100dvh;
+        background: rgba(255,255,255,0.7);
+        z-index:10000;
+        position:absolute;
+        top:0;
+        left:0;
+        display: flex;
+        align-content: center;
+        align-items: center;
+    }
+
+    .hidden{
+        display:none;
+    }
+
+    dialog {
+        margin: auto;
+        max-width: 90vw;
+        max-height: 90vh;
+        width: 80%;
+        border: none;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    #closeModal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.125em;
+        fill: currentColor;
+        overflow: hidden;
+    }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2 class="text-center p-2">Housie Game App</h2>
-        <div class="row">
-            <div class="col-md-10">
-                <div class="text-center">
-                    <div class="border border-dark-subtle bg-dark-subtle p-2">
-                        <div class="pb-2"><b>Played Number(s) Board</b></div>
-                        <div id="board">
+    <header>
+        <h1>Housie Game App</h1>
+    </header>
+    <main>
+        <h2>Played Number(s) Board</h2>
+        <div id="board">
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="game text-center">
-                    <button class="btn btn-secondary mx-2 fs-2" style="width: 4rem;" id="get-number">
-                        <span id="play" class="">
-                            <i class="bi bi-play-circle"></i>
-                        </span>
-                    </button>
-                    <span class="border border-secondary bg-secondary-subtle mnum" id="result"><span class="text-light">00</span></span>
-                    <button class="btn btn-warning mx-2 fs-2" style="width: 4rem;" id="new-game">
-                        <span id="start" class="">
-                            <i class="bi bi-arrow-repeat"></i>
-                        </span>
-                    </button>
-                    <div>Last Number: <span class="badge text-bg-warning" id="last"></span></div>
-                </div>                
-            </div>
-            <div class="text-secondary mt-2 text-center">
-                2010 - <script>document.write(new Date().getFullYear())</script> &copy; <a target="_blank" class="text-secondary text-decoration-none" href="https://fdh.pw">fdh.pw</a> | <a type="button" class="text-secondary text-decoration-none" data-bs-toggle="modal" data-bs-target="#about-game">How to Play?</a>
-            </div>
         </div>
+    </main>
+    <aside>
+        <div class="game-play">
+            <button class="play-btn" id="get-number">
+                <span id="play" class="">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg>
+                </span>
+            </button>
+            <span class="mnum" id="result"><span class="text-light">00</span></span>
+            <button class="reset-play" id="new-game">
+                <span id="start" class="">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg>
+                </span>
+            </button>
+        </div>
+        <div>Last Number: <span class="badge active-num" id="last"></span></div>
+    </aside>
+
+    <footer>
+        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" class="text-secondary text-decoration-none" href="https://fdh.pw">fdh.pw</a> | <a href="#" id="how-to-play">How to Play?</a>
+    </footer>
+
+    <div id="loading" class="loading hidden">
+        <div class="loader"></div>
     </div>
-    <div id="loading" class="d-none loading bg-light bg-opacity-75 pt-5">
-        <div class="d-flex justify-content-center pt-5">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
     <!-- About Game -->
-  <div class="modal fade" id="about-game" tabindex="-1" aria-labelledby="about-game-label" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <dialog id="how-to-play-modal">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="about-game-label">About This App</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h2>About This App</h2>
+            <button id="closeModal" aria-label="Close">&times;</button>
         </div>
-        <div class="modal-body">
-          <p>This app will replace the physical board and balls, so you can just have physical tickets. To start a new game tap the <span class="badge text-bg-secondary"><i class="bi-play-circle"></i></span> icon. 
-            A random number between 1-90 is generated (<span class="text-info">using <b>Math.random()</b> inbuild function of javascript</span>) and saved on the board.</p>
-          <p>This app is purely made using <b>html</b> and <b>JavaScript</b> with <a target="_blank" href="https://getbootstrap.com">Bootstrap</a> for styling.  
+        <p>This app will replace the physical board and balls, so you can just have physical tickets. To start a new game tap the <span class="badge"><svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg></span> icon. 
+            A random number between 1-90 is generated (<span>using <b>Math.random()</b> inbuild function of javascript</span>) and saved on the board.</p>
+        <p>This app is purely made using <b>html</b> and <b>JavaScript</b> a simple CSS for styling.  
             We use <a target="_blank" target="_blank" href="https://www.jsdelivr.com/package/npm/js-cookie">js-cookie</a>  library to save the game progress.</p>
-          <p>To re-start a game you can tap the <span class="badge text-bg-warning"><i class="bi bi-arrow-repeat"></i></span> icon. <span class="text-danger">This will delete previous game progress!</span></p>
+        <p>To re-start a game you can tap the <span class="badge active-num"><svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg></span> icon. <span class="text-danger">This will delete previous game progress!</span></p>
 
-          <p>Enjoy!!</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+        <p>Enjoy!!</p>
+    </dialog>
+
+    <!--SVG SPRITES-->
+    <svg xmlns="http://www.w3.org/2000/svg" title="logo" style="display: none;">
+        <symbol id="play-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
+        </symbol>
+        <symbol id="arrow-repeat" viewBox="0 0 16 16">
+            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+        </symbol>
+    </svg>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.8/dist/js.cookie.min.js" integrity="sha256-UGg03egVJMdLqTxAxzrAMW+41Phg+BY1OlVisvgRjBI=" crossorigin="anonymous"></script>
     <script>
         const min = 0;
         const max = 90;
@@ -130,31 +292,31 @@
             let boarddata = '';
             for(let i=min;i<max;i++){
                 let bno = i+1;
-                boarddata += '<span class="badge text-bg-light p-2 snum" id="'+i+'">' + bno + '</span>';
+                boarddata += '<span class="snum" id="'+i+'">' + bno + '</span>';
             }
             board.innerHTML = boarddata;
         }
 
-        //initiliase the house
+        // initiliase the house
         function initial(){
             house[max] = "NA";            
-            //Cookies already exist
+            // Cookies already exist
             if(Cookies.get("gamestart") == "started"){
-                //populate house[] from cookies values
+                // populate house[] from cookies values
                 house = JSON.parse(Cookies.get('house'));
                 let pi = JSON.parse(Cookies.get('pi'));
                 makeBoard();
 
-                //mark board with already played numbers
+                // mark board with already played numbers
                 for(let i=min;i<max;i++){
                     if(house[i] != "no"){
                         count++;
                         let el = document.getElementById(i);
                         el.classList.remove("text-bg-light");
-                        el.classList.add("text-bg-warning");
+                        el.classList.add("active-num");
                     }
                 }
-                //set p value
+                // set p value
                 p = pi['p'];
                 markBoard(pi['i']);
             }else{
@@ -171,7 +333,7 @@
         function markBoard(i){
             if(i!=max){
                 document.getElementById(i).classList.remove("text-bg-light");
-                document.getElementById(i).classList.add("text-bg-warning");
+                document.getElementById(i).classList.add("active-num");
                 result.innerHTML = i+1;
             }
             prev.innerHTML = house[p];
@@ -179,18 +341,17 @@
         }
         
         function startLoading(){
-            document.getElementById('loading').classList.remove("d-none");
+            document.getElementById('loading').classList.remove("hidden");
         }
         function stopLoading(){
-            document.getElementById('loading').classList.add("d-none");
+            document.getElementById('loading').classList.add("hidden");
         }
 
-        //Get new random number between 1-90
+        // Get new random number between 1-90
         function housie(){
             startLoading();
             var i = randomNumber(min,max);
             if (house[i] == "no"){
-                //Adding a random fake delay
                 setTimeout(function (){
                     count++;
                     house[i] = i+1
@@ -212,7 +373,7 @@
             }
         }
 
-        //Reload Game from start
+        // Reload Game from start
         function reload(){
             let text = "Do you want to Start a new Game?";
             if(confirm(text) == true){
@@ -223,9 +384,9 @@
                 Cookies.remove('house',jsCkOpts);            
                 setTimeout(function (){
                     initial();
-                    var els = document.querySelectorAll(".snum.text-bg-warning");
+                    var els = document.querySelectorAll(".snum.active-num");
                     els.forEach(r => {
-                        r.classList.remove("text-bg-warning");
+                        r.classList.remove("active-num");
                         r.classList.add("text-bg-light");
                     });
                     result.innerHTML='<span class="text-light">00</span>';
@@ -235,10 +396,31 @@
             }
         }
 
-        //Generate Random Number
+        // Generate Random Number
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
+
+        // Modal
+        const modal = document.getElementById("how-to-play-modal");
+        const openBtn = document.getElementById("how-to-play");
+        const closeBtn = document.getElementById("closeModal");
+
+        openBtn.addEventListener("click", () => {
+            modal.showModal();
+        });
+
+        closeBtn.addEventListener("click", () => {
+            modal.close();
+        });
+
+        // Close when clicking outside the modal box
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                modal.close();
+            }
+        });
+
 
         document.getElementById("get-number").addEventListener("click",housie);
         document.getElementById("new-game").addEventListener("click",reload)
