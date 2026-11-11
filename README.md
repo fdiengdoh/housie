@@ -12,10 +12,10 @@ Demo of the app at [hs.fdh.pw](https://hs.fdh.pw)
 
 **On mobile device**
 
-<img src="images/blank_mob.png" width="390px"> <img src="images/played_mb.png" width="390px"> 
+<img src="images/blank_mb.png" width="390px"> <img src="images/played_mb.png" width="390px"> 
 
 **On Desktop Browser**
 
 ![Before game start](images/blank_dt.png "Before the game start") 
 
-![Game Progress](images/played_pc.png "Game Progress")
+![Game Progress](images/played_dt.png "Game Progress")
