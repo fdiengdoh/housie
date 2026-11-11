@@ -9,21 +9,18 @@
     :root{
         --gap:clamp(0.2rem, 0.04rem + 0.8vw, 1rem);
     }
-    *{
+    *,*:before,*:after{
         margin:0;
         padding:0;
     }
-
     body{
-        font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;;
+        font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
         line-height: 1.5;
-        max-width:1400px;
-        margin:0 auto;
-        padding:0 1rem;
+        min-height:100dvh;
         display:grid;
-        gap:var(--gap);
+        gap:0;
         grid-template-columns:3fr 1fr;
-        grid-template-rows:1fr auto 1fr;
+        grid-template-rows:auto 1fr auto;
         grid-template-areas:
             "header header"
             "main aside"
@@ -38,16 +35,27 @@
             "footer";
         }
     }
-
     header{
         grid-area:header;
         text-align: center;
+        padding: var(--gap);
+        background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
+        h1{
+            
+            color:#fcfcfe;
+        }
     }
     main{
-        background:#ced4da;
+        background:#e2ebf0;
         grid-area:main;
         text-align: center;
         padding: var(--gap);
+        h2{
+            background: #0d0d02;
+            background: linear-gradient(115deg, #0d0d02, #20201e);
+            color:#fcfcfe;
+            margin-bottom: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
+        }
     }
     aside{
         background:#dfe5eb;
@@ -55,7 +63,7 @@
         display: flex;
         flex-direction: column;
         gap:var(--gap);
-        justify-content: center;
+        justify-content: top;
         align-items: center;
         padding:1rem;
         .game-play{
@@ -72,6 +80,8 @@
     footer{
         grid-area:footer;
         text-align:center;
+        padding:1rem;
+        background:#ccc;
     }
     h1{
         font-size: clamp(1.5rem, 1.1rem + 2vw, 3.5rem);;
@@ -79,38 +89,40 @@
     h2 {
         font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
     }
-
-    a, a:link, a:visited{
+    p{margin-bottom: 1rem;}
+    a, a:focus, a:link, a:visited{
         text-decoration: none;
         color:#00224b;
+			border:none;
     }
-
-    #board{
-        display:flex;
+    #board {
+        display: grid;
+        gap: var(--gap); 
+        width: 100%;
+        grid-template-columns: repeat(15, 1fr); 
+        @media (orientation: portrait) {
+            grid-template-columns: repeat(10, 1fr); 
+        }
+    }
+    .snum {
+        aspect-ratio: 1/1;
+        display: flex;
+        align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: var(--gap);
-        padding:var(--gap);
-        
-    }
-    .snum{
-        width: clamp(1.3rem, 0.96rem + 1.7vw, 3rem);
-        height: clamp(1.3rem, 0.96rem + 1.7vw, 3rem);
+        background: #13aede;
+        background-image: linear-gradient( 110deg,  #13aede 11.3%, #119ac3 99.3% );
+        color:#fcfcfc;
+        border: none;
+        border-radius: clamp(5px, 4px + 0.3125vw, 10px);
         font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
         font-weight: bold;
-        background:#fff;
-        border-radius: clamp(5px, 4px + 0.3125vw, 10px);
-        padding: clamp(5px, 4px + 0.3125vw, 10px);
-        display:flex;
-        justify-content:center;
-        align-items:center;
     }
     .mnum{
         background: #e2e3e5;
         border:1px solid rgb(108,117,128);
-        min-width: clamp(6rem, 5.2rem + 4vw, 10rem);
-        min-height: clamp(6rem, 5.2rem + 4vw, 10rem);
-        font-size: 4rem;
+        min-width: clamp(4rem, 2.8rem + 6vw, 10rem);
+        min-height: clamp(4rem, 2.8rem + 6vw, 10rem);
+        font-size: clamp(2.5rem, 2.1rem + 2vw, 4.5rem);
         display:flex;
         justify-content:center;
         align-items:center;
@@ -134,11 +146,20 @@
         font-size:2rem;
     }
     .reset-play, .active-num{
-        background:#ffcd39;
-        color:#000;
+        background:#FEC163;
+        background-image: linear-gradient( 135deg, #FEC163 10%, #DE4313 100%);
+        color:#0d0d02;
     }
     .text-danger{
-        color:#dc3545;
+        color:#9a0d1b;
+    }
+    .icon {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.125em;
+        fill: currentColor;
+        overflow: hidden;
     }
     .loader {
         width: 50px;
@@ -167,48 +188,28 @@
         align-content: center;
         align-items: center;
     }
-
     .hidden{
         display:none;
     }
-
-    dialog {
-        margin: auto;
-        max-width: 90vw;
-        max-height: 90vh;
-        width: 80%;
-        border: none;
-        border-radius: 8px;
-        padding: 1.5rem;
+    dialog{
+        margin:auto;
+        border:none;
+        width:80vw;
+        border-radius:10px;
+        padding:1rem;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
-
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(2px);
     }
-
-    .modal-header {
+    .modal-header{
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1rem;
-    }
-
-    #closeModal {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-
-    .icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-        vertical-align: -0.125em;
-        fill: currentColor;
-        overflow: hidden;
+        #closeModal{
+            font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
+        }
     }
     </style>
 </head>
@@ -230,7 +231,7 @@
                     <svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg>
                 </span>
             </button>
-            <span class="mnum" id="result"><span class="text-light">00</span></span>
+            <span class="mnum" id="result"><span>00</span></span>
             <button class="reset-play" id="new-game">
                 <span id="start" class="">
                     <svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg>
@@ -241,17 +242,17 @@
     </aside>
 
     <footer>
-        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" class="text-secondary text-decoration-none" href="https://fdh.pw">fdh.pw</a> | <a href="#" id="how-to-play">How to Play?</a>
+        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a type="button" id="how-to-play">How to Play?</a>
     </footer>
 
     <div id="loading" class="loading hidden">
         <div class="loader"></div>
     </div>
     <!-- About Game -->
-    <dialog id="how-to-play-modal">
+    <dialog id="how-to-play-modal" tabindex="-1">
         <div class="modal-header">
             <h2>About This App</h2>
-            <button id="closeModal" aria-label="Close">&times;</button>
+            <span id="closeModal" aria-label="Close">&times;</span>
         </div>
         <p>This app will replace the physical board and balls, so you can just have physical tickets. To start a new game tap the <span class="badge"><svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg></span> icon. 
             A random number between 1-90 is generated (<span>using <b>Math.random()</b> inbuild function of javascript</span>) and saved on the board.</p>
@@ -312,7 +313,6 @@
                     if(house[i] != "no"){
                         count++;
                         let el = document.getElementById(i);
-                        el.classList.remove("text-bg-light");
                         el.classList.add("active-num");
                     }
                 }
@@ -332,7 +332,6 @@
 
         function markBoard(i){
             if(i!=max){
-                document.getElementById(i).classList.remove("text-bg-light");
                 document.getElementById(i).classList.add("active-num");
                 result.innerHTML = i+1;
             }
@@ -386,10 +385,9 @@
                     initial();
                     var els = document.querySelectorAll(".snum.active-num");
                     els.forEach(r => {
-                        r.classList.remove("active-num");
-                        r.classList.add("text-bg-light");
+                        r.classList.remove("active-num");                        
                     });
-                    result.innerHTML='<span class="text-light">00</span>';
+                    result.innerHTML='<span>00</span>';
                     prev.innerHTML = "";
                     stopLoading();
                 }, 1000);
