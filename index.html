@@ -48,6 +48,9 @@
     main{
         background:#e2ebf0;
         grid-area:main;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         text-align: center;
         padding: var(--gap);
         h2{
@@ -63,7 +66,7 @@
         display: flex;
         flex-direction: column;
         gap:var(--gap);
-        justify-content: top;
+        justify-content: center;
         align-items: center;
         padding:1rem;
         .game-play{
@@ -111,7 +114,7 @@
         justify-content: center;
         background: #13aede;
         background-image: linear-gradient( 110deg,  #13aede 11.3%, #119ac3 99.3% );
-        color:#fcfcfc;
+        color:#acccac;
         border: none;
         border-radius: clamp(5px, 4px + 0.3125vw, 10px);
         font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
@@ -195,6 +198,7 @@
         margin:auto;
         border:none;
         width:80vw;
+        max-width: 450px;
         border-radius:10px;
         padding:1rem;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -242,7 +246,7 @@
     </aside>
 
     <footer>
-        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a type="button" id="how-to-play">How to Play?</a>
+        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a type="button" id="how-to-play">How to Play?</a> | Full code at <a href="https://github.com/fdiengdoh/housie" target="_blank">Github</a> 
     </footer>
 
     <div id="loading" class="loading hidden">
@@ -257,7 +261,7 @@
         <p>This app will replace the physical board and balls, so you can just have physical tickets. To start a new game tap the <span class="badge"><svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg></span> icon. 
             A random number between 1-90 is generated (<span>using <b>Math.random()</b> inbuild function of javascript</span>) and saved on the board.</p>
         <p>This app is purely made using <b>html</b> and <b>JavaScript</b> a simple CSS for styling.  
-            We use <a target="_blank" target="_blank" href="https://www.jsdelivr.com/package/npm/js-cookie">js-cookie</a>  library to save the game progress.</p>
+            <b><a target="_blank" target="_blank" href="https://www.jsdelivr.com/package/npm/js-cookie">js-cookie library</a></b> is used to save the game progress.</p>
         <p>To re-start a game you can tap the <span class="badge active-num"><svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg></span> icon. <span class="text-danger">This will delete previous game progress!</span></p>
 
         <p>Enjoy!!</p>
@@ -276,19 +280,20 @@
     </svg>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.8/dist/js.cookie.min.js" integrity="sha256-UGg03egVJMdLqTxAxzrAMW+41Phg+BY1OlVisvgRjBI=" crossorigin="anonymous"></script>
     <script>
-        const min = 0;
-        const max = 90;
-        const expTime = 1/24;
-        const jsCkOpts = { path: '/', expires:expTime, sameSite:'strict'};
-        var count = 0;
-        var p = max;
+        const min = 0; // Minimum Value
+        const max = 90; // Maximum Value
+        const expTime = 1/24; // Cookie expire time
+        const jsCkOpts = { path: '/', expires:expTime, sameSite:'strict'}; // Cookie value
+        var count = 0; // Set counterr
+        var p = max; // Set p value to max
+        // Get important elements
         var prev = document.getElementById("last");
         var result = document.getElementById("result");
         var board = document.getElementById("board");
-        
-
+        // Start the house array
         var house = [];
 
+        // Function to make the board with number from 1 to 90
         function makeBoard(){
             let boarddata = '';
             for(let i=min;i<max;i++){
@@ -301,7 +306,8 @@
         // initiliase the house
         function initial(){
             house[max] = "NA";            
-            // Cookies already exist
+            // Check if Cookies already exist
+            // Means game was started prior so populate old data
             if(Cookies.get("gamestart") == "started"){
                 // populate house[] from cookies values
                 house = JSON.parse(Cookies.get('house'));
@@ -320,6 +326,7 @@
                 p = pi['p'];
                 markBoard(pi['i']);
             }else{
+                // Fresh game so set new cookies to save game progress
                 Cookies.set("gamestart","started",jsCkOpts);        
                 makeBoard();
                 for(let i=min;i<max;i++){
@@ -330,6 +337,7 @@
             }
         }
 
+        // Function to mark a new number on the board
         function markBoard(i){
             if(i!=max){
                 document.getElementById(i).classList.add("active-num");
@@ -342,19 +350,23 @@
         function startLoading(){
             document.getElementById('loading').classList.remove("hidden");
         }
+
         function stopLoading(){
             document.getElementById('loading').classList.add("hidden");
         }
 
-        // Get new random number between 1-90
+        // Function to get new random number between 1-90
         function housie(){
             startLoading();
             var i = randomNumber(min,max);
+            // Check if random number is not previously obtained
             if (house[i] == "no"){
+                // Set fake wait time
                 setTimeout(function (){
                     count++;
                     house[i] = i+1
                     house[max] = house[i]
+                    // Save the new numbber in cookie too
                     Cookies.set('pi',JSON.stringify({'p':p,'i':i}),jsCkOpts);
                     markBoard(i);
                     Cookies.set('house',JSON.stringify(house),jsCkOpts);
@@ -363,6 +375,7 @@
                 }, 1000); 
                 
             }else{
+                // repeat if random number matched already stored number
                 if(count<max){
                     housie();
                 }else{
@@ -372,7 +385,7 @@
             }
         }
 
-        // Reload Game from start
+        // Reload Game from start delete all saved progress
         function reload(){
             let text = "Do you want to Start a new Game?";
             if(confirm(text) == true){
@@ -399,7 +412,7 @@
             return Math.floor(Math.random() * (max - min) + min);
         }
 
-        // Modal
+        // Modal box script
         const modal = document.getElementById("how-to-play-modal");
         const openBtn = document.getElementById("how-to-play");
         const closeBtn = document.getElementById("closeModal");
@@ -412,12 +425,12 @@
             modal.close();
         });
 
-        // Close when clicking outside the modal box
+        /*/ Close when clicking outside the modal box
         modal.addEventListener("click", (event) => {
             if (event.target === modal) {
                 modal.close();
             }
-        });
+        });*/
 
 
         document.getElementById("get-number").addEventListener("click",housie);
