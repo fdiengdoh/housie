@@ -12,7 +12,7 @@ Demo of the app at [hs.fdh.pw](https://hs.fdh.pw)
 
 **On mobile device**
 
-<img src="images/blank_mb.png" width="390px"> <img src="images/played_mb.png" width="390px"> 
+<img src="images/blank_mb.png" width="390px"> <img src="images/played_mob.png" width="390px"> 
 
 **On Desktop Browser**
 
