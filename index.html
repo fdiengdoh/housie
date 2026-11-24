@@ -87,7 +87,7 @@
         background:#ccc;
     }
     h1{
-        font-size: clamp(1.5rem, 1.1rem + 2vw, 3.5rem);;
+        font-size: clamp(1.5rem, 1.1rem + 2vw, 3.5rem);
     }
     h2 {
         font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
@@ -124,7 +124,6 @@
         position: relative;
         z-index: 1;
         font-weight: 600;
-        font-size: 16px;
         color: #00224b;
         font-size: clamp(2.5rem, 2.1rem + 2vw, 4.5rem);
     }
@@ -136,7 +135,7 @@
         border-radius: 10px;
         font-weight: 600;
     }
-
+    #how-to-play{cursor: pointer;}
     .play-btn, .reset-play{
         background:#6c757d;
         border:none;
@@ -145,11 +144,16 @@
         height: 3rem;
         color:#fff;
         font-size:2rem;
+        cursor: pointer;
     }
     .reset-play, .active-num, .played-num{
         background:#FEC163;
         background-image: linear-gradient( 135deg, #FEC163 10%, #DE4313 100%);
         color:#0d0d02;
+    }
+    .play-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
     .text-danger{
         color:#9a0d1b;
@@ -250,7 +254,7 @@
     </aside>
 
     <footer>
-        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a type="button" id="how-to-play">How to Play?</a> | <a href="https://github.com/fdiengdoh/housie" target="_blank"><svg class="icon" aria-hidden="true"><use xlink:href="#github"></use></svg></a> 
+        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a href="#" id="how-to-play">How to Play?</a> | <a href="https://github.com/fdiengdoh/housie" target="_blank"><svg class="icon" aria-hidden="true"><use xlink:href="#github"></use></svg></a> 
     </footer>
     <!-- About Game -->
     <dialog id="how-to-play-modal" tabindex="-1">
@@ -354,12 +358,15 @@
             const total = playedNumbers.length;
             if (total === 0) {
                 updateBoardUI(null, null);
+                getNumberBtn.disabled = false;
             } else if (total >= MAX) {
                 updateBoardUI(playedNumbers[total - 1], "All Numbers Played");
+                getNumberBtn.disabled = true;
             } else {
                 const current = playedNumbers[total - 1];
                 const previous = total > 1 ? playedNumbers[total - 2] : null;
                 updateBoardUI(current, previous);
+                getNumberBtn.disabled = false;
             }
         }
 
@@ -488,13 +495,18 @@
             try {
                 await drawNumber();
             } finally {
-                getNumberBtn.disabled = false;
+                if (playedNumbers.length < MAX) {
+                    getNumberBtn.disabled = false;
+                }
             }
         });
 
         newGameBtn.addEventListener("click", resetGame);
 
-        openModalBtn.addEventListener("click", () => modal.showModal());
+        openModalBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            modal.showModal();
+        });
         closeModalBtn.addEventListener("click", () => modal.close());
 
         // Close modal when clicking outside dialog box
