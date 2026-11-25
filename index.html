@@ -6,158 +6,218 @@
     <title>Game of Housie</title>
     <link rel="shortcut icon" href="favicon.png" />
     <style>
-    :root{
-        --gap:clamp(0.2rem, 0.04rem + 0.8vw, 1rem);
+    :root {
+        color-scheme: light dark;
+
+        /** Base text & surface colors */
+        --light-a0: light-dark(#fcfcfe, #030303);
+        --light-a20: light-dark(#c0c4c8, #343536);
+
+        --dark-a0: light-dark(#00224b, #e3e7ec);
+        --dark-a10: light-dark(#20201e, #cdcdcd);
+
+        /** Theme accent & primary */
+        --accent-a0: light-dark(#7ea73b, #7ea73b);
+        --accent-a10: light-dark(#6d9132, #8ab052);
+
+        --primary-a0: light-dark(#1e4c7c, #1d4169);
+        --primary-a10: light-dark(#43638e, #43638e);
+        --primary-text: light-dark(#e2e6ef, #f0f3fa);
+
+        /** Neutral surfaces */
+        --bg-a0: light-dark(#fff, #121212);
+        --bg-a10: light-dark(#f2f2f2, #252525);
+        --bg-a20: light-dark(#e4e4e4, #393939);
+        --bg-a30: light-dark(#d7d7d7, #4f4f4f);
+        --bg-a40: light-dark(#cacaca, #6b6b6b);
+        --bg-a50: light-dark(#bdbdbd, #7d7d7d);
+
+        /** Danger */
+        --danger-a0: light-dark(#c92a2a, #ff8080);
+        --danger-a10: light-dark(#b01020, #ff9b99);
+
+        --gap: clamp(0.2rem, 0.04rem + 0.8vw, 1rem);
     }
-    *,*:before,*:after{
-        margin:0;
-        padding:0;
+
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-    body{
+
+    body {
         font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
         line-height: 1.5;
-        min-height:100dvh;
-        display:grid;
-        gap:0;
-        grid-template-columns:3fr 1fr;
-        grid-template-rows:auto 1fr auto;
+        min-height: 100dvh;
+        color: var(--dark-a0);
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: auto 1fr auto;
         grid-template-areas:
             "header header"
             "main aside"
             "footer footer";
-        @media(max-width: 800px){
-            grid-template-columns:1fr;
-            grid-template-rows:auto;
+
+        @media (max-width: 800px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
             grid-template-areas:
-            "header"
-            "main"
-            "aside"
-            "footer";
+                "header"
+                "main"
+                "aside"
+                "footer";
         }
     }
-    header{
-        grid-area:header;
+
+    header {
+        grid-area: header;
         text-align: center;
         padding: var(--gap);
-        background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%);
-        h1{
-            
-            color:#fcfcfe;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(to top, var(--primary-a0) 0%, var(--primary-a10) 100%);
+
+        h1 {
+            color: var(--primary-text);
         }
     }
-    main{
-        background:#e2ebf0;
-        grid-area:main;
+
+    main {
+        background: var(--bg-a10);
+        grid-area: main;
         display: flex;
         flex-direction: column;
         justify-content: center;
         text-align: center;
         padding: var(--gap);
-        h2{
-            background: #0d0d02;
-            background: linear-gradient(115deg, #0d0d02, #20201e);
-            color:#fcfcfe;
+
+        h2 {
+            background: var(--dark-a0);
+            background: linear-gradient(115deg, var(--dark-a0), var(--dark-a10));
+            color: var(--light-a0);
             margin-bottom: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
         }
     }
-    aside{
-        background:#dfe5eb;
-        grid-area:aside;
+
+    aside {
+        background: var(--bg-a20);
+        grid-area: aside;
         display: flex;
         flex-direction: column;
-        gap:1rem;
+        gap: 1rem;
         justify-content: center;
         align-items: center;
-        padding:1rem;
-        .game-play{
-            display:flex;
+        padding: 1rem;
+
+        .game-play {
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap:1rem;
-            @media(max-width:800px){
+            gap: 1rem;
+
+            @media (max-width: 800px) {
                 flex-direction: row;
             }
         }
     }
-    footer{
-        grid-area:footer;
-        text-align:center;
-        padding:1rem;
-        background:#ccc;
+
+    footer {
+        grid-area: footer;
+        text-align: center;
+        padding: 1rem;
+        background: var(--light-a20);
+        color: var(--dark-a0);
     }
-    h1{
+
+    h1 {
         font-size: clamp(1.5rem, 1.1rem + 2vw, 3.5rem);
     }
+
     h2 {
         font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
     }
-    p{margin-bottom: 1rem;}
-    a, a:focus, a:link, a:visited{
-        text-decoration: none;
-        color:#00224b;
-			border:none;
+
+    p {
+        margin-bottom: 1rem;
     }
+
+    a {
+        text-decoration: none;
+        color: var(--dark-a0);
+    }
+
     #board {
         display: grid;
-        gap: var(--gap); 
+        gap: var(--gap);
         width: 100%;
-        grid-template-columns: repeat(15, 1fr); 
+        grid-template-columns: repeat(15, 1fr);
+
         @media (orientation: portrait) {
-            grid-template-columns: repeat(10, 1fr); 
+            grid-template-columns: repeat(10, 1fr);
         }
     }
+
     .snum {
-        aspect-ratio: 1/1;
+        aspect-ratio: 1 / 1;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #989898;
-        background-image: linear-gradient( 110deg,  #989898 11.3%, #989898 99.3% );
-        color:#454554;
-        border: none;
+        background: var(--bg-a20);
+        background-image: linear-gradient(110deg, var(--bg-a20) 11.3%, var(--bg-a30) 99.3%);
+        color: var(--bg-a50);
         border-radius: clamp(5px, 4px + 0.3125vw, 10px);
         font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
         font-weight: bold;
     }
-    .mnum{
+
+    .mnum {
         position: relative;
         z-index: 1;
         font-weight: 600;
-        color: #00224b;
+        color: var(--dark-a0);
         font-size: clamp(2.5rem, 2.1rem + 2vw, 4.5rem);
     }
 
-    .badge{
-        padding:2px 10px;
-        background:#6c757d;
-        color:#fff;
+    .badge {
+        padding: 2px 10px;
+        background: var(--bg-a40);
+        color: var(--light-a0);
         border-radius: 10px;
         font-weight: 600;
     }
-    #how-to-play{cursor: pointer;}
-    .play-btn, .reset-play{
-        background:#6c757d;
-        border:none;
-        border-radius:clamp(5px, 4px + 0.3125vw, 10px);
-        width:clamp(4rem, 3.4rem + 3vw, 7rem);
-        height: 3rem;
-        color:#fff;
-        font-size:2rem;
+
+    #how-to-play {
         cursor: pointer;
     }
-    .reset-play, .active-num, .played-num{
-        background:#FEC163;
-        background-image: linear-gradient( 135deg, #FEC163 10%, #DE4313 100%);
-        color:#0d0d02;
+
+    .play-btn, .reset-play {
+        background: var(--bg-a50);
+        border: none;
+        border-radius: clamp(5px, 4px + 0.3125vw, 10px);
+        width: clamp(4rem, 3.4rem + 3vw, 7rem);
+        height: 3rem;
+        color: var(--dark-a0);
+        font-size: 2rem;
+        cursor: pointer;
     }
+
+    .reset-play, .active-num, .played-num {
+        background: var(--accent-a0);
+        background-image: linear-gradient(135deg, var(--accent-a0) 10%, var(--accent-a10) 100%);
+        color: var(--light-a0);
+    }
+
     .play-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
     }
-    .text-danger{
-        color:#9a0d1b;
+
+    .text-danger {
+        color: var(--danger-a10);
     }
+
     .icon {
         display: inline-block;
         width: 1em;
@@ -166,6 +226,7 @@
         fill: currentColor;
         overflow: hidden;
     }
+
     .spinner-wrapper {
         position: relative;
         width: clamp(4rem, 2.8rem + 6vw, 10rem);
@@ -176,49 +237,54 @@
     }
 
     .spinner {
-        position:absolute;
-        min-width: clamp(4rem, 2.8rem + 6vw, 10rem);
-        min-height: clamp(4rem, 2.8rem + 6vw, 10rem);
-        aspect-ratio: 1;
-        border: 6px solid #e3e3e3;
-        border-top: 6px solid #00224b;
+        position: absolute;
+        inset: 0;
+        border: 6px solid var(--bg-a0);
+        border-top: 6px solid var(--dark-a0);
         border-radius: 50%;
         animation: spin 1s linear infinite;
     }
+
     .spinner.stopped {
         animation: none;
-        border-color: #00224b;
+        border-color: var(--dark-a0);
     }
 
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
-    .hidden{
-        display:none;
-    }
-    dialog{
-        margin:auto;
-        border:none;
-        width:80vw;
+
+    dialog {
+        margin: auto;
+        border: none;
+        width: 80vw;
         max-width: 450px;
-        border-radius:10px;
-        padding:1rem;
+        border-radius: 10px;
+        padding: 1rem;
+        background: var(--bg-a10);
+        color: var(--dark-a0);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     }
+
     dialog::backdrop {
         background: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(2px);
     }
-    .modal-header{
+
+    .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        #closeModal{
+
+        #closeModal {
             font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
-            color:#DE4313;
+            color: var(--danger-a0);
             cursor: pointer;
         }
+    }
+    .hidden{
+        display: none;
     }
     </style>
 </head>
@@ -272,7 +338,7 @@
     </dialog>
 
     <!--SVG SPRITES-->
-    <svg xmlns="http://www.w3.org/2000/svg" title="logo" style="display: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" title="logo" class="hidden">
         <symbol id="play-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
             <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445"/>
