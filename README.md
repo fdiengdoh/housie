@@ -1,6 +1,6 @@
 # Play Housie Game
 
-A lightweight, zero-dependency web app that replaces the physical Housie / Tambola board and number balls—so you only need physical tickets to play.
+A lightweight, single-file, zero-dependency web app that replaces the physical Housie / Tambola board and number balls—so you only need physical tickets to play.
 
 A random number between **1 and 90** is drawn from the remaining unplayed pool (using JavaScript's built-in `Math.random()`) and highlighted on the board.
 
@@ -10,9 +10,10 @@ A random number between **1 and 90** is drawn from the remaining unplayed pool (
 
 ## ✨ What's New & Enhanced
 
+* **Adaptive Light & Dark Mode:** Automatically adapts to your device's system theme (`color-scheme: light dark` and CSS `light-dark()`) with a refreshed green accent palette and high-contrast visual hierarchy for played numbers.
 * **Zero External Dependencies:** Removed `js-cookie`—game progress is now saved natively using the browser's `localStorage` API, eliminating third-party scripts and cookie overhead.
 * **Smart Roulette Spin Animation:** Added a smooth, cubic-decelerating number spin that sweeps exclusively through **unplayed numbers** (with a minimum 10-tick spin even in the endgame) before landing on the drawn number.
-* **Instant Collision-Free Draws:** Numbers are picked directly from a remaining-numbers pool rather than guessing and retrying, keeping draws instantaneous right down to the 90th ball.
+* **Instant Collision-Free Draws:** Numbers are picked directly from a remaining-numbers pool (`Set`) rather than guessing and retrying, keeping draws instantaneous right down to the 90th ball.
 * **Persistent State & Smart Controls:** Automatically restores your active board, current number, and previous number on reload, and disables the draw button once all 90 numbers have been played.
 * **Native Modal & Inline SVG Sprites:** Uses the native HTML `<dialog>` element for the instructions modal and inline SVG sprites (adapted from [Bootstrap Icons](https://icons.getbootstrap.com)) for fast loading without Bootstrap CSS.
 
@@ -20,8 +21,8 @@ A random number between **1 and 90** is drawn from the remaining unplayed pool (
 
 ## 🛠️ Tech Stack
 
-* **HTML5** (Semantic layout & native `<dialog>`)
-* **CSS3** (CSS Grid, responsive orientation layouts, and `clamp()` fluid typography)
+* **HTML5** (Semantic layout, native `<dialog>`, inline SVG sprite sheet)
+* **CSS3** (CSS Grid, `light-dark()` color theming, responsive orientation layouts, and `clamp()` fluid typography)
 * **Vanilla JavaScript (ES6+)** (`localStorage`, `Set`, `Promise`-based animations)
 
 ---
