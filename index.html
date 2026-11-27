@@ -3,38 +3,60 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game of Housie</title>
+    <meta name="description" content="Free, lightweight Housie and Tambola number generator and board app. Draw random numbers from 1 to 90 with a roulette spin animation, voice caller, automatic game saving, and light/dark mode—no physical board or balls needed.">
+    <meta name="keywords" content="housie, tambola, housie number generator, tambola board, online housie, housie game app, 1 to 90 number generator, random number caller, bingo 90, housie caller, free tambola game">
+    <meta name="author" content="fdh.pw">
+    <meta name="copyright" content="fdh.pw" />
+    <meta name="robots" content="index, follow" />
+    <!-- Essential META Tags -->
+    <meta property="og:title" content="Game of Housie — Online Tambola Number Generator & Board">
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://hs.fdh.pw/image/og_image.webp">
+    <meta property="og:url" content="https://hs.fdh.pw/">
+    <link rel="canonical" href="https://hs.fdh.pw/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fdiengdoh" />
+    <meta name="twitter:creator" content="@fdiengdoh" />
+    <meta name="twitter:title" content="Game of Housie — Online Tambola Number Generator & Board" />
+    <meta name="twitter:description" content="Replace the physical Housie board and balls. Draw random numbers 1–90 with smooth spin animations, voice caller, and auto-saved game progress."/>
+    <meta name="twitter:image" content="https://hs.fdh.pw/image/og_image.webp">
+      
+    <!-- Non-Essential, But Recommended -->
+    <meta property="og:description" content="Replace the physical Housie board and balls. Draw random numbers 1–90 with smooth spin animations, voice caller, and auto-saved game progress.">
+    <meta property="og:site_name" content="Game of Housie — Online Tambola Number Generator & Board">
+    <meta name="twitter:image:alt" content="Game of Housie — Online Tambola Number Generator & Board">
+    <title>Game of Housie — Online Tambola Number Generator & Board</title>
     <link rel="shortcut icon" href="favicon.png" />
     <style>
     :root {
         color-scheme: light dark;
 
         /** Base text & surface colors */
-        --light-a0: light-dark(#fcfcfe, #030303);
-        --light-a20: light-dark(#c0c4c8, #343536);
+        --light-a0: light-dark(oklab(99.163% 0.00074 -0.00264), oklch(9.693% 0.00001 271.152));
+        --light-a20: light-dark(oklch(81.836% 0.00723 248.21), oklch(32.835% 0.00228 248.27));
 
-        --dark-a0: light-dark(#00224b, #e3e7ec);
-        --dark-a10: light-dark(#20201e, #cdcdcd);
+        --dark-a0: light-dark(oklch(25.665% 0.08561 255.371), oklch(92.636% 0.00813 254.083));
+        --dark-a10: light-dark(oklch(24.277% 0.0037 106.794), oklch(84.832% 0.0001 271.152));
 
         /** Theme accent & primary */
-        --accent-a0: light-dark(#7ea73b, #7ea73b);
-        --accent-a10: light-dark(#6d9132, #8ab052);
+        --accent-a0: light-dark(oklch(67.623% 0.14366 127.596), oklch(67.623% 0.14366 127.596));
+        --accent-a10: light-dark(oklch(60.964% 0.12961 127.576), oklch(70.855% 0.12991 127.67));
 
-        --primary-a0: light-dark(#1e4c7c, #1d4169);
-        --primary-a10: light-dark(#43638e, #43638e);
-        --primary-text: light-dark(#e2e6ef, #f0f3fa);
+        --primary-a0: light-dark(oklch(41.021% 0.09504 252.072), oklch(36.999% 0.08075 252.926));
+        --primary-a10: light-dark(oklch(49.428% 0.07896 256.104), oklch(49.428% 0.07896 256.104));
+        --primary-text: light-dark(oklch(92.451% 0.01303 266.739), oklch(96.388% 0.01001 267.407));
 
         /** Neutral surfaces */
-        --bg-a0: light-dark(#fff, #121212);
-        --bg-a10: light-dark(#f2f2f2, #252525);
-        --bg-a20: light-dark(#e4e4e4, #393939);
-        --bg-a30: light-dark(#d7d7d7, #4f4f4f);
-        --bg-a40: light-dark(#cacaca, #6b6b6b);
-        --bg-a50: light-dark(#bdbdbd, #7d7d7d);
+        --bg-a0: light-dark(oklch(100% 0.00011 271.152), oklch(18.22% 0.00002 271.152));
+        --bg-a10: light-dark(oklch(96.115% 0.00011 271.152), oklch(26.448% 0.00003 271.152));
+        --bg-a20: light-dark(oklch(91.887% 0.0001 271.152), oklch(34.458% 0.00004 271.152));
+        --bg-a30: light-dark(oklch(87.917% 0.0001 271.152), oklch(42.761% 0.00005 271.152));
+        --bg-a40: light-dark(oklch(83.902% 0.0001 271.152), oklch(52.78% 0.00006 271.152));
+        --bg-a50: light-dark(oklch(79.837% 0.00009 271.152), oklch(58.971% 0.00007 271.152));
 
         /** Danger */
-        --danger-a0: light-dark(#c92a2a, #ff8080);
-        --danger-a10: light-dark(#b01020, #ff9b99);
+        --danger-a0: light-dark(oklch(54.568% 0.19492 26.6), oklch(74.444% 0.155 21.475));
+        --danger-a10: light-dark(oklch(48.26% 0.18786 24.768), oklch(79.167% 0.12016 21.313));
 
         --gap: clamp(0.2rem, 0.04rem + 0.8vw, 1rem);
     }
@@ -93,7 +115,6 @@
         padding: var(--gap);
 
         h2 {
-            background: var(--dark-a0);
             background: linear-gradient(115deg, var(--dark-a0), var(--dark-a10));
             color: var(--light-a0);
             margin-bottom: clamp(0.5rem, 0.4rem + 0.5vw, 1rem);
@@ -119,6 +140,20 @@
 
             @media (max-width: 800px) {
                 flex-direction: row;
+            }
+        }
+
+        .game-stats {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+
+            @media (max-width: 800px) {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
             }
         }
     }
@@ -148,6 +183,7 @@
         color: var(--dark-a0);
     }
 
+    /** Game Board */
     #board {
         display: grid;
         gap: var(--gap);
@@ -159,6 +195,7 @@
         }
     }
 
+    /** Number Cells */
     .snum {
         aspect-ratio: 1 / 1;
         display: flex;
@@ -170,14 +207,22 @@
         border-radius: clamp(5px, 4px + 0.3125vw, 10px);
         font-size: clamp(1rem, 0.8rem + 1vw, 2rem);
         font-weight: bold;
+        transition: transform 0.08s ease-out;
     }
 
+    /** Highlight the last drawn number */
+    .snum.active-num {
+        transform: scale(1.08);
+        z-index: 2;
+    }
+
+    /** Mark the drawn numbers */
     .mnum {
         position: relative;
         z-index: 1;
         font-weight: 600;
         color: var(--dark-a0);
-        font-size: clamp(2.5rem, 2.1rem + 2vw, 4.5rem);
+        font-size: clamp(5rem, 4rem + 5vw, 10rem);
     }
 
     .badge {
@@ -188,18 +233,25 @@
         font-weight: 600;
     }
 
-    #how-to-play {
+    .badge-btn {
+        border: none;
+        font: inherit;
+        font-weight: 600;
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
     }
 
+    /** Buttons */
     .play-btn, .reset-play {
         background: var(--bg-a50);
         border: none;
         border-radius: clamp(5px, 4px + 0.3125vw, 10px);
-        width: clamp(4rem, 3.4rem + 3vw, 7rem);
-        height: 3rem;
+        width: clamp(4rem, 3.2rem + 4vw, 8rem);
+        height: clamp(4rem, 3.2rem + 4vw, 8rem);
         color: var(--dark-a0);
-        font-size: 2rem;
+        font-size: clamp(3rem, 2.6rem + 2vw, 5rem);
         cursor: pointer;
     }
 
@@ -227,10 +279,11 @@
         overflow: hidden;
     }
 
+    /** Spinner Animation */
     .spinner-wrapper {
         position: relative;
-        width: clamp(4rem, 2.8rem + 6vw, 10rem);
-        height: clamp(4rem, 2.8rem + 6vw, 10rem);
+        width: clamp(8rem, 6.6rem + 7vw, 15rem);
+        height: clamp(8rem, 6.6rem + 7vw, 15rem);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -239,8 +292,8 @@
     .spinner {
         position: absolute;
         inset: 0;
-        border: 6px solid var(--bg-a0);
-        border-top: 6px solid var(--dark-a0);
+        border: 10px solid var(--bg-a0);
+        border-top: 10px solid var(--dark-a0);
         border-radius: 50%;
         animation: spin 1s linear infinite;
     }
@@ -258,8 +311,8 @@
     dialog {
         margin: auto;
         border: none;
-        width: 80vw;
-        max-width: 450px;
+        width: 85vw;
+        max-width: 480px;
         border-radius: 10px;
         padding: 1rem;
         background: var(--bg-a10);
@@ -276,14 +329,43 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 0.75rem;
 
-        #closeModal {
+        .close-modal {
             font-size: clamp(1.2rem, 0.99rem + 1.05vw, 2.25rem);
             color: var(--danger-a0);
             cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
         }
     }
-    .hidden{
+
+    .history-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(4.2rem, 1fr));
+        gap: 0.5rem;
+        max-height: 55dvh;
+        overflow-y: auto;
+        padding: 0.25rem 0;
+    }
+
+    .history-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.35rem;
+        border-radius: 6px;
+        background: var(--bg-a20);
+        font-size: 0.8rem;
+
+        strong {
+            font-size: 1.1rem;
+            color: var(--dark-a0);
+        }
+    }
+
+    .hidden {
         display: none;
     }
     </style>
@@ -295,49 +377,68 @@
     </header>
     <main>
         <h2>Played Number(s) Board</h2>
-        <div id="board">
-
-        </div>
+        <div id="board"></div>
     </main>
     <aside>
         <div class="game-play">
-            <button class="play-btn" id="get-number">
-                <span id="play" class="">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg>
-                </span>
+            <button class="play-btn" id="get-number" aria-label="Draw next number" title="Draw next number (Space)">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg>
             </button>
             <div class="spinner-wrapper">
                 <div class="spinner stopped"></div>
                 <span class="mnum" id="result">00</span>
             </div>
-            <button class="reset-play" id="new-game">
-                <span id="start" class="">
-                    <svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg>
-                </span>
+            <button class="reset-play" id="new-game" aria-label="Start new game" title="Start new game">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg>
             </button>
         </div>
-        <div>Last Number: <span class="badge active-num" id="last"></span></div>
+
+        <div class="game-stats">
+            <div>Last Number: <span class="badge active-num" id="last">NA</span></div>
+            <div>
+                Played: 
+                <button type="button" class="badge badge-btn" id="open-history" title="View exact draw order">
+                    <span id="played-count">0 / 90</span>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#list-ol"></use></svg>
+                </button>
+            </div>
+            <div>
+                <button type="button" class="badge badge-btn" id="toggle-voice" aria-pressed="true" title="Toggle voice caller">
+                    <svg class="icon" id="voice-icon" aria-hidden="true"><use xlink:href="#volume-up"></use></svg>
+                    <span id="voice-label">Voice On</span>
+                </button>
+            </div>
+        </div>
     </aside>
 
     <footer>
-        2010 - <script>document.write(new Date().getFullYear())</script> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a href="#" id="how-to-play">How to Play?</a> | <a href="https://github.com/fdiengdoh/housie" target="_blank"><svg class="icon" aria-hidden="true"><use xlink:href="#github"></use></svg></a> 
+        2010 - <span id="year"></span> © <a target="_blank" href="https://fdh.pw">fdh.pw</a> | <a href="#" id="how-to-play">How to Play?</a> | <a href="https://github.com/fdiengdoh/housie" target="_blank" aria-label="GitHub repository"><svg class="icon" aria-hidden="true"><use xlink:href="#github"></use></svg></a> 
     </footer>
-    <!-- About Game -->
-    <dialog id="how-to-play-modal" tabindex="-1">
+
+    <!-- About Game Dialog -->
+    <dialog id="how-to-play-modal">
         <div class="modal-header">
             <h2>About This App</h2>
-            <span id="closeModal" aria-label="Close">&times;</span>
+            <button type="button" class="close-modal" data-close-modal aria-label="Close">&times;</button>
         </div>
-        <p>This app will replace the physical board and balls, so you can just have physical tickets. To start a new game tap the <span class="badge"><svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg></span> icon. 
-            A random number between 1-90 is generated (<span>using <b>Math.random()</b> inbuild function of javascript</span>) and saved on the board.</p>
-        <p>This app is purely made using <b>html</b> and <b>JavaScript</b> and simple CSS for styling.  
-            <b>Local Storage</b> is used to save the game progress.</p>
-        <p>To re-start a game you can tap the <span class="badge active-num"><svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg></span> icon. <span class="text-danger">This will delete previous game progress!</span></p>
-
+        <p>This app replaces the physical board and balls, so you only need physical tickets. Tap the <span class="badge"><svg class="icon" aria-hidden="true"><use xlink:href="#play-circle"></use></svg></span> icon (or press <b>Spacebar</b>) to draw a number between <b>1–90</b>.</p>
+        <p>Tap the <b>Played</b> counter badge anytime to inspect the exact order in which numbers were called to verify claims.</p>
+        <p>This app is built purely with <b>HTML</b>, <b>CSS</b>, and vanilla <b>JavaScript</b>, using <b>Local Storage</b> to save your progress automatically.</p>
+        <p>To start fresh, tap the <span class="badge active-num"><svg class="icon" aria-hidden="true"><use xlink:href="#arrow-repeat"></use></svg></span> icon. <span class="text-danger">This will delete previous game progress!</span></p>
         <p>Enjoy!!</p>
     </dialog>
 
-    <!--SVG SPRITES-->
+    <!-- Draw History Dialog -->
+    <dialog id="history-modal">
+        <div class="modal-header">
+            <h2>Draw History</h2>
+            <button type="button" class="close-modal" data-close-modal aria-label="Close">&times;</button>
+        </div>
+        <p id="history-empty">No numbers drawn yet.</p>
+        <div class="history-grid" id="history-list"></div>
+    </dialog>
+
+    <!-- SVG SPRITES -->
     <svg xmlns="http://www.w3.org/2000/svg" title="logo" class="hidden">
         <symbol id="play-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -347,28 +448,69 @@
             <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
             <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
         </symbol>
+        <symbol id="list-ol" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5"/>
+            <path d="M1.713 11.865v-.474H2c.217 0 .363-.137.363-.317 0-.185-.158-.31-.361-.31-.223 0-.367.152-.373.31h-.59c.016-.467.373-.787.986-.787.588-.002.954.291.957.703a.595.595 0 0 1-.492.594v.033a.615.615 0 0 1 .569.631c.003.533-.502.8-1.051.8-.656 0-1-.37-1.008-.794h.582c.008.178.186.306.422.309.254 0 .424-.145.422-.35-.002-.195-.155-.348-.414-.348h-.3zm-.004-4.699h-.604v-.035c0-.408.295-.844.958-.844.583 0 .96.326.96.756 0 .389-.257.617-.476.848l-.537.572v.03h1.054V9H1.143v-.395l.957-.99c.138-.142.293-.304.293-.508 0-.18-.147-.32-.342-.32a.33.33 0 0 0-.342.338zM2.564 5h-.635V2.924h-.031l-.598.42v-.567l.629-.443h.635z"/>
+        </symbol>
+        <symbol id="volume-up" viewBox="0 0 16 16">
+            <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
+            <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
+            <path d="M10.025 8a4.5 4.5 0 0 1-1.318 3.182L8 10.475A3.5 3.5 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.5 4.5 0 0 1 10.025 8M7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11"/>
+        </symbol>
+        <symbol id="volume-mute" viewBox="0 0 16 16">
+            <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06M6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0"/>
+        </symbol>
         <symbol id="github" viewBox="0 0 16 16">
             <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
         </symbol>
     </svg>
+
     <script>
-        const MIN = 1; // Minimum value
-        const MAX = 90; // Maximum Value
-        const STORAGE_KEY = "housie_game_state"; // To Store game in local storage
+        const MIN = 1;
+        const MAX = 90;
+        const STORAGE_KEY = "housie_game_state";
+        const VOICE_KEY = "housie_voice_enabled";
 
         // DOM Elements
         const spinner = document.querySelector(".spinner");
         const prevEl = document.getElementById("last");
         const resultEl = document.getElementById("result");
         const boardEl = document.getElementById("board");
+        const playedCountEl = document.getElementById("played-count");
         const getNumberBtn = document.getElementById("get-number");
         const newGameBtn = document.getElementById("new-game");
-        const modal = document.getElementById("how-to-play-modal");
-        const openModalBtn = document.getElementById("how-to-play");
-        const closeModalBtn = document.getElementById("closeModal");
+        const toggleVoiceBtn = document.getElementById("toggle-voice");
+        const voiceIconUse = document.querySelector("#voice-icon use");
+        const voiceLabelEl = document.getElementById("voice-label");
+
+        // Modals
+        const aboutModal = document.getElementById("how-to-play-modal");
+        const openAboutBtn = document.getElementById("how-to-play");
+        const historyModal = document.getElementById("history-modal");
+        const openHistoryBtn = document.getElementById("open-history");
+        const historyListEl = document.getElementById("history-list");
+        const historyEmptyEl = document.getElementById("history-empty");
 
         // Game State
-        let playedNumbers = []; // Stores drawn numbers in chronological order
+        let playedNumbers = [];
+        let voiceEnabled = localStorage.getItem(VOICE_KEY) !== "false";
+
+        // Announce number aloud via Web Speech API
+        function speakNumber(num) {
+            if (!voiceEnabled || !("speechSynthesis" in window)) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(`Number ${num}`);
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Sync voice toggle button UI
+        function updateVoiceUI() {
+            toggleVoiceBtn.setAttribute("aria-pressed", String(voiceEnabled));
+            voiceIconUse.setAttribute("href", voiceEnabled ? "#volume-up" : "#volume-mute");
+            voiceLabelEl.textContent = voiceEnabled ? "Voice On" : "Muted";
+            toggleVoiceBtn.classList.toggle("active-num", voiceEnabled);
+        }
 
         // Build the board (1 to 90)
         function makeBoard() {
@@ -397,7 +539,7 @@
             }
         }
 
-        // Update UI for a drawn number and previous number
+        // Update UI for drawn number, previous number, and played counter
         function updateBoardUI(currentNum, previousNum) {
             if (currentNum !== null) {
                 const cell = document.getElementById(`num-${currentNum}`);
@@ -408,14 +550,30 @@
             }
 
             prevEl.textContent = previousNum !== null ? previousNum : "NA";
+            playedCountEl.textContent = `${playedNumbers.length} / ${MAX}`;
+        }
+
+        // Render chronological draw history inside modal
+        function renderHistory() {
+            if (playedNumbers.length === 0) {
+                historyEmptyEl.classList.remove("hidden");
+                historyListEl.innerHTML = "";
+                return;
+            }
+
+            historyEmptyEl.classList.add("hidden");
+            historyListEl.innerHTML = playedNumbers
+                .map((num, idx) => `<div class="history-item"><span>#${idx + 1}</span><strong>${num}</strong></div>`)
+                .join("");
         }
 
         // Initialize or restore the game
         function initGame() {
+            document.getElementById("year").textContent = new Date().getFullYear();
+            updateVoiceUI();
             makeBoard();
             playedNumbers = loadState();
 
-            // Mark all previously played numbers on the board
             playedNumbers.forEach((num) => {
                 const cell = document.getElementById(`num-${num}`);
                 if (cell) cell.classList.add("played-num");
@@ -438,16 +596,13 @@
 
         // Build spin sequence using ONLY unplayed numbers
         function buildSequence(target, unplayed) {
-            // Set minimum 10 ticks before landing on number
             const MIN_TICKS = 10;
             const seq = [];
 
-            // Add full passes of unplayed numbers until at least MIN_TICKS
             while (seq.length < MIN_TICKS) {
                 seq.push(...unplayed);
             }
 
-            // Advance through unplayed numbers until landing on the target
             for (const num of unplayed) {
                 seq.push(num);
                 if (num === target) break;
@@ -460,9 +615,9 @@
         function runSequence(target, unplayed) {
             return new Promise((resolve) => {
                 const sequence = buildSequence(target, unplayed);
-                const baseDelay = 10;      // 10ms base tick
-                const slowWindow = 10;     // Decelerate over the last 10 ticks
-                const maxExtraDelay = 400; // Final tick adds up to 400ms
+                const baseDelay = 10;
+                const slowWindow = 10;
+                const maxExtraDelay = 400;
                 let index = 0;
                 let prevSpan = null;
 
@@ -527,15 +682,15 @@
             const randomIndex = Math.floor(Math.random() * available.length);
             const drawnNumber = available[randomIndex];
 
-            // Pass 'available' directly so it spins only through unplayed numbers
             await runSequence(drawnNumber, available);
 
-            const previousNumber = playedNumbers.length > 0 
-                ? playedNumbers[playedNumbers.length - 1] 
+            const previousNumber = playedNumbers.length > 0
+                ? playedNumbers[playedNumbers.length - 1]
                 : null;
 
             playedNumbers.push(drawnNumber);
             saveState();
+            speakNumber(drawnNumber);
 
             if (playedNumbers.length === MAX) {
                 updateBoardUI(drawnNumber, "All Numbers Played");
@@ -550,6 +705,9 @@
         function resetGame() {
             if (!confirm("Do you want to start a new game?")) return;
 
+            if ("speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
+            }
             localStorage.removeItem(STORAGE_KEY);
             playedNumbers = [];
             initGame();
@@ -569,17 +727,45 @@
 
         newGameBtn.addEventListener("click", resetGame);
 
-        openModalBtn.addEventListener("click", (event) => {
-            event.preventDefault();
-            modal.showModal();
-        });
-        closeModalBtn.addEventListener("click", () => modal.close());
-
-        // Close modal when clicking outside dialog box
-        modal.addEventListener("click", (event) => {
-            if (event.target === modal) {
-                modal.close();
+        toggleVoiceBtn.addEventListener("click", () => {
+            voiceEnabled = !voiceEnabled;
+            localStorage.setItem(VOICE_KEY, String(voiceEnabled));
+            updateVoiceUI();
+            if (!voiceEnabled && "speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
             }
+        });
+
+        openAboutBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            aboutModal.showModal();
+        });
+
+        openHistoryBtn.addEventListener("click", () => {
+            renderHistory();
+            historyModal.showModal();
+        });
+
+        // Unified close & backdrop click handling for all <dialog> elements
+        document.querySelectorAll("dialog").forEach((dialogEl) => {
+            dialogEl.querySelector("[data-close-modal]")?.addEventListener("click", () => {
+                dialogEl.close();
+            });
+            dialogEl.addEventListener("click", (event) => {
+                if (event.target === dialogEl) {
+                    dialogEl.close();
+                }
+            });
+        });
+
+        // Spacebar shortcut to draw next number
+        document.addEventListener("keydown", (event) => {
+            if (event.code !== "Space") return;
+            if (aboutModal.open || historyModal.open || getNumberBtn.disabled) return;
+            if (document.activeElement?.tagName === "BUTTON") return;
+
+            event.preventDefault();
+            getNumberBtn.click();
         });
 
         document.addEventListener("DOMContentLoaded", initGame);
