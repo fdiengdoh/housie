@@ -32,16 +32,6 @@ A zero-dependency, single-page Housie / Tambola caller and number board (1–90)
 
 Works in modern desktop and mobile browsers (Chrome, Firefox, Safari/iOS, Edge). Voice announcements require browser support for the Web Speech API (`speechSynthesis`).
 
-## Local Development
-
-Serve the folder over HTTP or HTTPS (Service Workers do not register over `file://`):
-
-```bash
-npx serve .
-# or
-python3 -m http.server 8080
-```
-
 ---
 
 ## 📸 Screenshots
