@@ -1,36 +1,45 @@
 # Game of Housie — Online Tambola Number Generator & Board
 
-A lightweight, zero-dependency Housie / Tambola number caller and 1–90 board web app built with plain HTML, CSS, and vanilla JavaScript. Designed to replace the physical board and balls—whether you're playing on a phone, laptop, or projected screen.
+A zero-dependency, single-page Housie / Tambola caller and number board (1–90) built with vanilla HTML, CSS, and JavaScript. Designed for mobile screens, projectors, and offline Home Screen use on iOS and desktop browsers.
 
-A random number between **1 and 90** is drawn from the remaining unplayed pool (using JavaScript's built-in `Math.random()`) and highlighted on the board.
-
-**Live Demo:** [hs.fdh.pw](https://hs.fdh.pw)
-
----
+**Live Demo:** [https://hs.fdh.pw](https://hs.fdh.pw)
 
 ## Features
 
-- **1–90 Interactive Board:** Automatically highlights drawn numbers in ascending order and adapts grid layout across desktop, mobile, and portrait/landscape orientations.
-- **Unplayed-Only Roulette Spin:** Builds a spin sequence dynamically from remaining unplayed numbers with cubic deceleration before landing on the drawn number.
-- **Large Projector-Friendly Spinner:** Oversized number display and spinner ring for easy visibility across a room or on a shared screen.
-- **Built-in Voice Caller:** Announces drawn numbers aloud using the browser's `speechSynthesis` API, with a persistent mute/unmute toggle.
-- **Last Number & Played Counter:** Displays the previous number called (`NA` at game start) alongside a live `Played: X / 90` badge.
-- **Draw History Viewer:** Click the **Played** counter badge to view every drawn number in exact chronological order (`#1`, `#2`, ...) for quick claim verification.
-- **Spacebar Shortcut:** Press `Space` to draw the next number hands-free (guarded while modals are open or a draw is in progress).
-- **Automatic Local Storage Persistence:** Saves game state (`housie_game_state`) and voice preference (`housie_voice_enabled`) automatically in `localStorage`.
-- **Light & Dark Mode:** Uses `color-scheme: light dark`, `light-dark()`, and `oklch()` / `oklab()` color tokens to follow system theme preferences.
-- **Zero External Dependencies:** Runs in a single HTML file with inline SVG sprites and native `<dialog>` modals—no frameworks, build steps, or third-party scripts.
+- **1–90 Number Caller & Board:** Responsive 15-column landscape board (10-column portrait) highlighting called numbers and the latest draw.
+- **Roulette Spin Animation:** Cycles through remaining unplayed numbers with cubic deceleration before landing on the drawn number.
+- **Chronological Draw History:** Inspect the exact order in which numbers were called via the **Played** badge modal to verify claims.
+- **Voice Caller:** Optional speech synthesis announcement (`Number X`) with mute/unmute toggle saved in `localStorage`.
+- **Theme Cycling (`auto` / `light` / `dark`):** Uses CSS `color-scheme` and `light-dark()` tokens with a dark header toggle button (`#toggle-theme`) and persistent selection.
+- **Auto-Save & Offline Ready:** Persists game progress in `localStorage` and caches app assets via a Service Worker (`sw.js`) and `manifest.json` for Home Screen use.
 
-## How to Play
+## Controls & Shortcuts
 
-1. Open the app and hand out physical Housie/Tambola tickets to players.
-2. Click the **Play** button (or press **Spacebar**) to draw a random number between **1 and 90**.
-3. Check the board or **Played** history modal whenever a player calls a win.
-4. Click the **Reset** button to clear saved progress and start a new game.
+- **Draw Number:** Tap the play button or press `Spacebar`.
+- **Draw History:** Tap the **Played** counter badge (`0 / 90`).
+- **Voice Toggle:** Tap **Voice On / Muted**.
+- **Theme Toggle:** Tap the theme icon button in the header to cycle `auto` → `light` → `dark`.
+- **New Game:** Tap the reset button (prompts for confirmation before clearing saved numbers).
+
+## Project Structure
+
+- `index.html` — Markup, responsive `light-dark()` / `oklch()` styles, SVG icon sprite, and game logic.
+- `manifest.json` — Web app manifest for standalone display and install metadata.
+- `sw.js` — Service Worker for offline asset caching.
+- `apple-touch-icon.png` — `180x180` icon for iOS Home Screen bookmarks.
 
 ## Browser Compatibility
 
 Works in modern desktop and mobile browsers (Chrome, Firefox, Safari/iOS, Edge). Voice announcements require browser support for the Web Speech API (`speechSynthesis`).
+
+## Local Development
+
+Serve the folder over HTTP or HTTPS (Service Workers do not register over `file://`):
+
+```bash
+npx serve .
+# or
+python3 -m http.server 8080
 
 ---
 
