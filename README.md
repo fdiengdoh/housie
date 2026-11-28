@@ -40,6 +40,7 @@ Serve the folder over HTTP or HTTPS (Service Workers do not register over `file:
 npx serve .
 # or
 python3 -m http.server 8080
+```
 
 ---
 
